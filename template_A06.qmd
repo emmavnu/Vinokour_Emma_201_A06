@@ -1,16 +1,16 @@
 ---
 title: "Assignment 6"
 subtitle: "STAT 201"
-author: "YOUR NAME"
-
+author: "Emma Vinokour"
 format:
   html:
     toc: true
     embed-resources: true
-
 execute:
   message: false
   warning: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Instructions
@@ -48,7 +48,7 @@ To get full credit for this Question you must:
 
 ## Github Repo Link
 
-[https://your-github-repo-url](https://your-github-repo-url)
+[https://github.com/emmavnu/Vinokour_Emma_201_A06.git](https://github.com/emmavnu/Vinokour_Emma_201_A06.git)
 
 :::
 
@@ -102,7 +102,11 @@ Extract the value `8162` (LeBron James points) in 2 different ways:
 - using names
 
 ```{r}
+#using indexing
+print(player_info[[2]][4])
 
+#using names
+print(player_info$LJ$points)
 ```
 
 
@@ -113,7 +117,13 @@ Add a new named element to the end of each player's list called `height`. The he
 Print the `player_info` list to prove you were successful.
 
 ```{r}
+player_heights <- list(MJ = 78, LJ = 81, KB = 78, KA = 86, SO = 85)
 
+for(i in 1:length(player_info)){
+  player_info[[i]]$height <- player_heights[[i]]
+}
+
+print(player_info)
 ```
 
 
@@ -132,7 +142,17 @@ Hint: initialize an empty list
 Note: this must still run correctly even if the values were to change or if another player were added to the list or if the player order changed.
 
 ```{r}
+points_per_game <- list()
 
+#iterates through each player's info list
+for (i in 1:length(player_info)){ 
+  #calculates and adds each player's points per game to the new list
+  points_per_game <- append(points_per_game, player_info[[i]][[4]]/player_info[[i]][[3]])
+}
+
+names(points_per_game) <- c("MJ", "LJ", "KB", "KA", "SO")
+
+print(points_per_game)
 ```
 
 
@@ -143,7 +163,9 @@ Use the list created in Part c and an appropriate apply function to round each v
 Store the output as a vector and print the results.
 
 ```{r}
+points_vec <- sapply(points_per_game, function(x) round(x,2))
 
+print(points_vec)
 ```
 
 
@@ -155,6 +177,7 @@ Consider the matrix `mat_rand` of random numbers below.
 rand_num <- c(sample(10:100, 10), sample(100:999, 10), sample(1000:2000, 10))
 
 mat_rand <- matrix(sample(rand_num, 30), ncol = 5)
+
 ```
 
 Use an appropriate apply function to round values with 2 digits to the nearest tens, values with 3 digits to the nearest hundreds, and 4 digits to the nearest thousands.
@@ -164,7 +187,19 @@ ie: 91 rounds to 90; 173 rounds to 200; 1450 rounds to 1000
 Hint: use `MARGIN = 1:2` to apply the function to each value instead of only a row/col.
 
 ```{r}
+special_round <- function(num){
+  if (num%/%10 >=1 && num%/%10 <=9 ) { #uses floor division to check if number is 2 digits (number of 10s in the number must be between 1 & 9)
+    return(round(num, -1)) #rounds to the nearest 10
+  } else if (num%/%100 >=1 && num%/%100 <=9) { #uses floor division to check if number is 3 digits (number of 100s in the number must be between 1 & 9)
+    return(round(num, -2)) #rounds to the nearest 100
+  } else if (num%/%1000 >=1 && num%/%1000 <=9) { #uses floor division to check if number is 4 digits (number of 1000s in the number must be between 1 & 9)
+    return(round(num, -3)) #rounds to the nearest 1000
+  }
+}
 
+mat_rand <- apply(mat_rand, MARGIN=1:2, special_round)
+
+print(mat_rand)
 ```
 
 
@@ -237,6 +272,9 @@ Example: The number 312 would return 6 (3 + 1 + 2)
 Run your function with 935068.
 
 ```{r}
-
+digit_sum <- function(num){
+  #base case
+  
+}
 ```
 
