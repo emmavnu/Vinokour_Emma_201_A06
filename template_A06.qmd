@@ -273,8 +273,17 @@ Run your function with 935068.
 
 ```{r}
 digit_sum <- function(num){
+  sum_vec <- c()
   #base case
-  
+  if(num==0){
+    sum_vec <- append(sum_vec, num)
+    return(sum(sum_vec))
+  } else {
+    sum_vec <- append(sum_vec, digit_sum(num%%10))
+    num <- num%/%10
+  }
 }
+
+digit_sum(312)
 ```
 
