@@ -216,6 +216,8 @@ download.file(url = temp_url, destfile = temp_file)
 
 max_temps <- read_tsv("state_max_temps.tsv") |> 
   janitor::clean_names()
+
+print(max_temps)
 ```
 
 ### Part a (2 points)
@@ -223,7 +225,8 @@ max_temps <- read_tsv("state_max_temps.tsv") |>
 Calculate the average temperature for each month across the whole data frame (using the data for all three states together).
 
 ```{r}
-
+avg_monthly_temp <- apply(max_temps, 2, mean)
+print(avg_monthly_temp)
 ```
 
 
@@ -273,17 +276,16 @@ Run your function with 935068.
 
 ```{r}
 digit_sum <- function(num){
-  sum_vec <- c()
+  digit_vec <- c()
   #base case
   if(num==0){
-    sum_vec <- append(sum_vec, num)
-    return(sum(sum_vec))
-  } else {
-    sum_vec <- append(sum_vec, digit_sum(num%%10))
-    num <- num%/%10
+    return(0)
+  } else { #all other cases
+    #finds the last digit of number by finding remainder when divided by 10, then continually adds to the truncated number, of which it also finds the last digit, etc.
+    return(num%%10+digit_sum(num%/%10)) 
   }
 }
 
-digit_sum(312)
+digit_sum(935068)
 ```
 
